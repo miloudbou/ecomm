@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 pt-5 text-center">
+    <h1 class="text-success mb-4">✅ تم تقديم طلبك بنجاح!</h1>
+    <p class="lead mb-4">شكراً لك، سيتم التواصل معك قريباً لتأكيد الطلب.</p>
+    <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg">🔙 الرجوع إلى المتجر</a>
+</div>
+{% endblock %}

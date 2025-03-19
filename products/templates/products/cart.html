@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">🛒 سلة المشتريات</h2>
+
+    {% if cart_items %}
+        <table class="table table-striped text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>الصورة</th>
+                    <th>المنتج</th>
+                    <th>السعر</th>
+                    <th>الكمية</th>
+                    <th>الإجمالي</th>
+                    <th>إزالة</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td><img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" style="max-width: 70px; height: auto;"></td>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.price }} دج</td>
+                    <td>
+                        <form method="POST" action="{% url 'update_cart' item.product.id %}">
+                            {% csrf_token %}
+                            <label for="quantity-{{ item.product.id }}" class="sr-only">الكمية</label>
+                            <input type="number" id="quantity-{{ item.product.id }}" name="quantity" value="{{ item.quantity }}" min="1" class="form-control text-center w-50 d-inline">
+                            <button type="submit" class="btn btn-outline-primary btn-sm">🔄</button>
+                        </form>
+                    </td>
+                    <td><strong>{{ item.total_price }} دج</strong></td>
+
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-sm btn-danger">❌</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="text-end mt-4">
+            <h4>الإجمالي: <strong class="text-success">{{ cart_total }} دج</strong></h4>
+            <a href="{% url 'checkout' %}" class="btn btn-lg btn-outline-success mt-3">✅ إتمام الشراء</a>
+        </div>
+
+    {% else %}
+        <div class="alert alert-warning text-center">
+            🛍️ سلة المشتريات فارغة! <a href="{% url 'product_list' %}" class="alert-link">تصفح المنتجات</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+

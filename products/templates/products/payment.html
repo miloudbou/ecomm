@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="text-center">💳 الدفع عبر PayPal</h2>
+
+    <div class="alert alert-info text-center">
+        يرجى تحديد المبلغ والعملة لإتمام عملية الدفع.
+    </div>
+
+    <form id="payment-form" method="post" action="{% url 'create_payment' %}">
+        {% csrf_token %}
+
+        <!-- حقل إدخال المبلغ -->
+        <div class="form-group">
+            <label for="amount">💰 المبلغ المطلوب دفعه</label>
+            <input type="number" id="amount" name="amount" class="form-control" placeholder="أدخل المبلغ" required>
+        </div>
+
+        <!-- قائمة اختيار العملة -->
+        <div class="form-group mt-3">
+            <label for="currency">🌍 العملة</label>
+            <select id="currency" name="currency" class="form-control">
+                <option value="USD">دولار أمريكي (USD)</option>
+                <option value="DZD">دينار جزائري (DZD)</option>
+            </select>
+        </div>
+
+        <!-- زر إتمام الدفع -->
+        <button type="submit" class="btn btn-primary mt-3 w-100">
+            🛒 إتمام الدفع
+        </button>
+    </form>
+
+    <!-- رسالة توضيحية -->
+    <p class="mt-4 text-muted text-center">
+        سيتم تحويل المبلغ تلقائيًا إلى الدولار الأمريكي عند استخدام الدينار الجزائري.
+    </p>
+</div>
+
+{% endblock %}
+
+
